@@ -124,7 +124,7 @@ end
 
 max_depth=2;
 T1=build_tree(monks_1_train);
-%disp_tree(T);
+disp_tree(T1);
 max_depth=10;
 
 %Assignment 3
