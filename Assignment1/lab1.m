@@ -1,5 +1,5 @@
-addpath 'E:\University Data\KTH\Q1\Machine Learning\Assignments\Assignment1\PRTools\prtools';
-addpath 'E:\University Data\KTH\Q1\Machine Learning\Assignments\Assignment1\info';
+addpath '\PRTools\prtools';
+addpath '\info';
 
 % %Assignment 1
 % pos=[];
