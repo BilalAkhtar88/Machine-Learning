@@ -1,5 +1,8 @@
-addpath '\PRTools\prtools';
-addpath '\info';
+clear all;
+clc;
+
+addpath 'PRTools/prtools';
+addpath 'info';
 
 % %Assignment 1
 % pos=[];
@@ -31,9 +34,12 @@ addpath '\info';
 
 
 readmonks;
-fprintf('entropy monk-1 = %.2f\n',entropy(monks_1_train));
-fprintf('entropy monk-2 = %.2f\n',entropy(monks_2_train));
-fprintf('entropy monk-3 = %.2f\n',entropy(monks_3_train));
+ent = entropy(monks_1_train);
+fprintf('entropy monk-1 = %.6f\n',ent(7));
+ent = entropy(monks_2_train);
+fprintf('entropy monk-2 = %.6f\n',ent(7));
+ent = entropy(monks_3_train);
+fprintf('entropy monk-3 = %.6f\n',ent(7));
 
 
 
@@ -45,9 +51,9 @@ inf_gain_monks_3=info_gain(monks_3_train);
 
 fprintf('\n');
   
-fprintf('information gain monk-1 = %.2f %.2f %.2f %.2f %.2f %.2f\n',inf_gain_monks_1);
-fprintf('information gain monk-2 = %.2f %.2f %.2f %.2f %.2f %.2f\n',inf_gain_monks_2);
-fprintf('information gain monk-3 = %.2f %.2f %.2f %.2f %.2f %.2f\n',inf_gain_monks_3);
+fprintf('information gain monk-1 = %.4f %.4f %.4f %.4f %.4f %.2f\n',inf_gain_monks_1);
+fprintf('information gain monk-2 = %.4f %.4f %.4f %.4f %.4f %.2f\n',inf_gain_monks_2);
+fprintf('information gain monk-3 = %.4f %.4f %.4f %.4f %.4f %.4f\n',inf_gain_monks_3);
 
 fprintf('\n');
 
@@ -123,16 +129,21 @@ for i=1:length(vals)
 end
 
 max_depth=2;
-T1=build_tree(monks_1_train,max_depth);
-disp_tree(T1);
+% T1=build_tree(monks_3_train);
+% disp_tree(T1);
 max_depth=10;
 
 %Assignment 3
 
 
-T1=build_tree(monks_1_train,);
+T1=build_tree(monks_1_train);
+% disp_tree(T1);
 T2=build_tree(monks_2_train);
+% figure;
+% disp_tree(T2);
 T3=build_tree(monks_3_train);
+% figure;
+% disp_tree(T3);
 fprintf('\nfull tree\n');
 fprintf('train error monk1 = %f, test error monk-1 = %f\n', ...
 	calculate_error(T1,monks_1_train),calculate_error(T1,monks_1_test));
@@ -158,7 +169,7 @@ fprintf('train error monk-3 = %f, test error monk-3 = %f\n', ...
 errors(k-2,i)=calculate_error(T3p,monks_3_test);
 end
 end
-figure()
+figure;
 plot(0.3:0.1:0.8,sum(errors(:,:)/10,2),'r-');
 
 return;

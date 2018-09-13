@@ -1,5 +1,8 @@
-addpath '\PRTools\prtools';
-addpath '\info';
+clear all;
+clc;
+
+addpath 'PRTools/prtools';
+addpath 'info';
 
 % %Assignment 1
 % pos=[];
@@ -31,9 +34,12 @@ addpath '\info';
 
 
 readmonks;
-fprintf('entropy monk-1 = %.2f\n',entropy(monks_1_train));
-fprintf('entropy monk-2 = %.2f\n',entropy(monks_2_train));
-fprintf('entropy monk-3 = %.2f\n',entropy(monks_3_train));
+ent = entropy(monks_1_train);
+fprintf('entropy monk-1 = %.6f\n',ent(7));
+ent = entropy(monks_2_train);
+fprintf('entropy monk-2 = %.6f\n',ent(7));
+ent = entropy(monks_3_train);
+fprintf('entropy monk-3 = %.6f\n',ent(7));
 
 
 
@@ -45,9 +51,9 @@ inf_gain_monks_3=info_gain(monks_3_train);
 
 fprintf('\n');
   
-fprintf('information gain monk-1 = %.2f %.2f %.2f %.2f %.2f %.2f\n',inf_gain_monks_1);
-fprintf('information gain monk-2 = %.2f %.2f %.2f %.2f %.2f %.2f\n',inf_gain_monks_2);
-fprintf('information gain monk-3 = %.2f %.2f %.2f %.2f %.2f %.2f\n',inf_gain_monks_3);
+fprintf('information gain monk-1 = %.4f %.4f %.4f %.4f %.4f %.4f\n',inf_gain_monks_1);
+fprintf('information gain monk-2 = %.4f %.4f %.4f %.4f %.4f %.4f\n',inf_gain_monks_2);
+fprintf('information gain monk-3 = %.4f %.4f %.4f %.4f %.4f %.4f\n',inf_gain_monks_3);
 
 fprintf('\n');
 

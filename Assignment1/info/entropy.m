@@ -4,6 +4,7 @@ function [e] = entropy(data)
 
 e = 0;
 
+freqOnes = sum(data);
 p1 = sum(data) / n_examples;
 p2 = 1 - p1;
 
