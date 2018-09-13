@@ -143,7 +143,7 @@ T2=build_tree(monks_2_train);
 % disp_tree(T2);
 T3=build_tree(monks_3_train);
 % figure;
-% disp_tree(T3);
+disp_tree(T3);
 fprintf('\nfull tree\n');
 fprintf('train error monk1 = %f, test error monk-1 = %f\n', ...
 	calculate_error(T1,monks_1_train),calculate_error(T1,monks_1_test));
