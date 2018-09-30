@@ -154,7 +154,7 @@ fprintf('train error monk3 = %f, test error monk-3 = %f\n', ...
 
 
 errors_monk_3=zeros(6,10);
-for i=1:10
+for i=1:500
 [n,m]=size(monks_3_train);
 p=randperm(n);
 for k=3:8;
@@ -163,9 +163,9 @@ monks_3_train_new=monks_3_train(p(1:floor(n*frac)),:);
 monks_3_prune=monks_3_train(p(floor(n*frac)+1:n),:);
 T3=build_tree(monks_3_train_new);
 T3p=prune_tree(T3,monks_3_prune);
-fprintf('\npruned tree %d - %d training - pruning\n',k*10,100-k*10);
-fprintf('train error monk-3 = %f, test error monk-3 = %f\n', ...
-	calculate_error(T3p,monks_3_train),calculate_error(T3p,monks_3_test));
+% fprintf('\npruned tree %d - %d training - pruning\n',k*10,100-k*10);
+% fprintf('train error monk-3 = %f, test error monk-3 = %f\n', ...
+% 	calculate_error(T3p,monks_3_train),calculate_error(T3p,monks_3_test));
 errors(k-2,i)=calculate_error(T3p,monks_3_test);
 end
 end
@@ -182,10 +182,10 @@ monks_1_train_new=monks_1_train(p(1:floor(n*frac)),:);
 monks_1_prune=monks_1_train(p(floor(n*frac)+1:n),:);
 T1=build_tree(monks_1_train_new);
 T1p=prune_tree(T1,monks_1_prune);
-fprintf('\npruned tree %d - %d training - pruning\n',k*10,100-k*10);
+% fprintf('\npruned tree %d - %d training - pruning\n',k*10,100-k*10);
 
-fprintf('train error monk-1 = %f, test error monk-1 = %f\n', ...
-	calculate_error(T1p,monks_1_train),calculate_error(T1p,monks_1_test));
+% fprintf('train error monk-1 = %f, test error monk-1 = %f\n', ...
+% 	calculate_error(T1p,monks_1_train),calculate_error(T1p,monks_1_test));
 end
 
 
