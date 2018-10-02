@@ -28,23 +28,27 @@ def objectiveFun (alpha):
     while i < N:
         sumAlpha += alpha[i] 
         while j < N:
-            dualForm += (alpha[i]*alpha[j]*P[i,j])
+            dualForm += (alpha[i]*alpha[j]*targets[i]*targets[j]*kernelFun(inputs[i],inputs[j],typeOfKernel))
             j +=1
             #Where P is precomputed N x N matrix declared globally
         i += 1
     return 0.5*dualForm - sumAlpha
                          
 # Task 03, Defining Zerofun Function
+
 # Task 04, Calling Minimize Function
+
 # Task 05, Extracting non-zero alpha values
+
 # Task 06, Calculating b values
+
 # Task 07, Implementing Indicator Function
 def indicator(a,b):
     indicat = 0
     global N
     i = 0
     while i < N:
-        indicat += (alpha[i]*targets[i]*kernelFun([a,b],inputs[i],1))
+        indicat += ((alpha[i]*targets[i]*kernelFun([a,b],inputs[i],typeOfKernel)) - bias)
         i += 1
     return indicat
 
@@ -64,6 +68,9 @@ targets = numpy.concatenate (
 -numpy.ones(classB.shape[0])))
 N = inputs.shape[0] # Number of rows ( samples )
 alpha = numpy.zeros(N)
+bias = 0
+typeOfKernel = 1
+C = 1
 
 permute = list(range(N))
 random.shuffle(permute)
@@ -97,36 +104,3 @@ linewidths =(1,3,1))
 # ------>  SubTask 03, Effects of different parameters of non-linear kernels
 # ------>  SubTask 04, Effects of slack Parameter C
 # ------>  SubTask 05, Imagination :-)
-
-
-    
-#-----------------------------------------------------------------------------------------------------------------------------------
-# The code for assignment runs above this line
-# Everything below this line tests the functions used in this assignment
-#-----------------------------------------------------------------------------------------------------------------------------------
-
-# Test Bed for checking Kernel functions
-arr1 = [10, 8, 6]
-arr2 = [9, 6, 6]
-dotProd = kernelFun(arr1,arr2,1,3)
-print(dotProd)
-
-# ret = minimize(objective, start, bounds=B, constraints=XC)
-# alpha = ret['x']
-
-
-# ---- TO IMPLEMENT ----
-
-# Kernel Function
-# Takes two data points as arguments and returns a "scalar product-like" similarity measure
-# Start with linear kernel and explore others as well
-
-# Objective in our case is (equation 4),
-# a function that takes vector alpha as argument and returns a scalar
-
-# start is a vector with initial guess of the alpha vector
-# We can use start = numpy.zeros(N), where N is number of training samples
-
-# B is list of pairs stating the lower and upper bounds for elements in alpha
-# we can set bounds = [(0,C) for b in range(N)]
-# to only have lower bound use bounds = [(0, None) for b in range(N)]
