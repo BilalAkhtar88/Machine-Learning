@@ -63,8 +63,7 @@ def indicator(a,b):
 
 numpy.random.seed(100)  #For getting same random numbers everytime
 
-classA = numpy.concatenate (
-(numpy.random.randn(10,2)*0.2 + [1.5,0.5] ,
+classA = numpy.concatenate ((numpy.random.randn(10,2)*0.2 + [1.5,0.5] ,
 numpy.random.randn (10,2)*0.2 + [-1.5,0.5]))
 
 classB = numpy.random.randn (20,2)*0.2 + [ 0.0 , -0.5]
