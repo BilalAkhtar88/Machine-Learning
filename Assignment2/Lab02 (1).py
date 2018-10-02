@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 
 # In[122]:
 
+np.random.seed(100)  #For getting same random numbers everytime
 
 classA = np.concatenate(           (np.random.randn(10,2)*0.2 + [1.5, 0.5],            np.random.randn(10,2)*0.2 + [-1.5,0.5]))
 classB = np.random.randn(20,2)*0.2 + [0,-0.5]
@@ -59,7 +60,9 @@ def buildTable(inputs, targets):
     global lookUpTable
     n = len(inputs)
     for i in range(N):
+#        print(i)
         for j in range(i+1):
+#            print(j)
             term = targets[i]*targets[j]*kernelFun(inputs[i],inputs[j])
             lookUpTable[i][j] = lookUpTable[j][i] = term
 
@@ -69,7 +72,7 @@ def buildTable(inputs, targets):
 
 def objective(alphas):
     global N
-    global loopUpTable
+    global lookUpTable
     result = np.sum(lookUpTable*alphas*alphas.reshape((N,1)))/2 - np.sum(alphas)
     return result
 
@@ -110,7 +113,7 @@ bounds = [(0,C) for i in range(N)]
 constraint = {'type':'eq', 'fun':zerofun};
 ret = minimize(objective, np.zeros(N), bounds=bounds, constraints=constraint)
 alpha = ret['x']
-print(ret['success'])
+#print(alpha)
 
 
 # In[140]:
@@ -119,10 +122,11 @@ print(ret['success'])
 # extract non-zero alphas
 threshold = 1e-5
 index = np.where(abs(alpha)>abs(threshold))[0]
+#print(index)
 
 k = index[0] # index of first support vector
 bias = np.sum([alpha[i]*targets[i]*kernelFun(inputs[i],inputs[k]) for i in index]) - targets[k]
-print(index)
+print(bias)
 # validate bias
 # k = 35
 # print(np.sum([alpha[i]*targets[i]*kernelFun(inputs[i],inputs[k]) for i in index]) - bias)
