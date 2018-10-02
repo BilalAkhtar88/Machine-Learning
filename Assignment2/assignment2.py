@@ -19,9 +19,9 @@ targets = targets[permute]
 
 # Task 01, Defining Kernel Function
 def kernelFun(x1, x2):
-#    kernelOutput = numpy.dot(x1, x2)
+    kernelOutput = numpy.dot(x1, x2)
 
-    kernelOutput = pow((numpy.dot(x1,x2) + 1), 4)
+#    kernelOutput = pow((numpy.dot(x1,x2) + 1), 4)
 
 #    dist = numpy.linalg.norm(x1-x2)
 #    expPower = (pow(dist,2)) / (2*pow(sigma,2))
