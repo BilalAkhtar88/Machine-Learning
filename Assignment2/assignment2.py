@@ -17,17 +17,21 @@ def kernelFun(x1, x2, kernelType, p=1, sigma=2):
     return kernelOutput
 
 # Task 02, Defining Objective Function
-def objectiveFun (alphaVec):
+def objectiveFun (alpha):
 #    alpha = numpy.array(alphaVec)
 #    N = len(alpha)
     global N
     sumAlpha = 0
     dualForm = 0
+    i = 0
+    j = 0
     while i < N:
         sumAlpha += alpha[i] 
         while j < N:
             dualForm += (alpha[i]*alpha[j]*P[i,j])
+            j +=1
             #Where P is precomputed N x N matrix declared globally
+        i += 1
     return 0.5*dualForm - sumAlpha
                          
 # Task 03, Defining Zerofun Function
@@ -35,6 +39,14 @@ def objectiveFun (alphaVec):
 # Task 05, Extracting non-zero alpha values
 # Task 06, Calculating b values
 # Task 07, Implementing Indicator Function
+def indicator(a,b):
+    indicat = 0
+    global N
+    i = 0
+    while i < N:
+        indicat += (alpha[i]*targets[i]*kernelFun([a,b],inputs[i],1))
+        i += 1
+    return indicat
 
 # Task 08, Generating Test Data (Provided)
 
@@ -42,7 +54,7 @@ numpy.random.seed(100)  #For getting same random numbers everytime
 
 classA = numpy.concatenate (
 (numpy.random.randn(10,2)*0.2 + [1.5,0.5] ,
-numpy.random.randn (10,2)*0.2 + [ -1.5,0.5]))
+numpy.random.randn (10,2)*0.2 + [-1.5,0.5]))
 
 classB = numpy.random.randn (20,2)*0.2 + [ 0.0 , -0.5]
 
@@ -50,7 +62,6 @@ inputs = numpy.concatenate((classA ,classB))
 targets = numpy.concatenate (
 (numpy.ones(classA.shape[ 0 ]),
 -numpy.ones(classB.shape[0])))
-
 N = inputs.shape[0] # Number of rows ( samples )
 
 permute = list(range(N))
