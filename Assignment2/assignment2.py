@@ -63,6 +63,7 @@ targets = numpy.concatenate (
 (numpy.ones(classA.shape[ 0 ]),
 -numpy.ones(classB.shape[0])))
 N = inputs.shape[0] # Number of rows ( samples )
+alpha = numpy.zeros(N)
 
 permute = list(range(N))
 random.shuffle(permute)
@@ -76,7 +77,7 @@ plt.plot([p[0] for p in classA] ,
 plt.plot([p[0] for p in classB] ,
 [p[1] for p in classB], 'r.')
 plt.axis('equal') # Force same s c a l e on both axes
-plt.savefig('svmplot.pdf') # Save a copy in a f i l e
+#plt.savefig('svmplot.pdf') # Save a copy in a f i l e
 plt.show() # Show t h e p l o t on t h e s c r e e n
 
 xgrid = numpy.linspace(-5,5)
