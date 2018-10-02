@@ -5,7 +5,12 @@ import matplotlib.pyplot as plt
 # Task 08, Generating Test Data (Provided)
 numpy.random.seed(100)  #For getting same random numbers everytime
 
-classA = numpy.concatenate ((numpy.random.randn(10,2)*0.2 + [1.5,0.5] , numpy.random.randn (10,2)*0.2 + [-1.5,0.5]))
+# linear, kernel, default values given in the handout
+# classA = numpy.concatenate ((numpy.random.randn(10,2)*0.2 + [1.5,0.5] , numpy.random.randn (10,2)*0.2 + [-1.5,0.5]))
+# classB = numpy.random.randn (20,2)*0.2 + [ 0.0 , -0.5]
+
+# linear kernel, shifted mean for class A
+classA = numpy.concatenate ((numpy.random.randn(10,2)*0.2 + [1.5,-1] , numpy.random.randn (10,2)*0.2 + [-1.5,0.5]))
 classB = numpy.random.randn (20,2)*0.2 + [ 0.0 , -0.5]
 
 inputs = numpy.concatenate((classA ,classB))
@@ -19,15 +24,15 @@ targets = targets[permute]
 
 # Task 01, Defining Kernel Function
 def kernelFun(x1, x2):
-    kernelOutput = numpy.dot(x1, x2)
+# kernelOutput = numpy.dot(x1, x2)
 
-#    kernelOutput = pow((numpy.dot(x1,x2) + 1), 4)
+   kernelOutput = pow((numpy.dot(x1,x2) + 1), 2)
 
 #    dist = numpy.linalg.norm(x1-x2)
 #    expPower = (pow(dist,2)) / (2*pow(sigma,2))
 #    kernelOutput = math.exp(-expPower)
 
-    return kernelOutput
+   return kernelOutput
 
 # Task 02, Defining Objective Function
 def buildTable(inputs, targets):
@@ -58,6 +63,8 @@ alpha = ret['x']
 threshold = 1e-5
 index = numpy.where(abs(alpha)>abs(threshold))[0]
 
+
+
 # Task 06, Calculating b values
 def biasCalc(alpha,svIndex):
     biasC = numpy.sum([alpha[i] * targets[i] * kernelFun(inputs[i], inputs[svIndex]) for i in index]) - targets[svIndex]
@@ -74,8 +81,13 @@ def indicator(a,b, alpha, index, bias):
 
 # Task 09, Plotting Results (Provided)
 
+plt.plot([p[0] for p in inputs[index]] , [p[1] for p in inputs[index]], 'yo') # circle SV
+
 plt.plot([p[0] for p in classA] , [p[1] for p in classA], 'b.')
 plt.plot([p[0] for p in classB] , [p[1] for p in classB], 'r.')
+
+
+
 
 xgrid = numpy.linspace(-5,5)
 ygrid = numpy.linspace(-4,4)
@@ -83,6 +95,7 @@ grid = numpy.array([[indicator(x,y,alpha,index,bias) for x in xgrid] for y in yg
 
 plt.contour (xgrid,ygrid,grid, (-1.0,0.0,1.0), colors =('red','black','blue'), linewidths =(1,3,1))
 plt.axis('equal')
+plt.suptitle('Polinomial kernel, power 2, shifted mean for class A')
 plt.show()
 #plt.savefig('svmplot.pdf') # Save a copy in a f i l e
 
