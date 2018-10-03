@@ -10,10 +10,11 @@ numpy.random.seed(100)  #For getting same random numbers everytime
 # classB = numpy.random.randn (20,2)*0.2 + [ 0.0 , -0.5]
 
 # linear kernel, shifted mean for class A
-classA = numpy.concatenate ((numpy.random.randn(10,2)*0.2 + [1.5,-1] , numpy.random.randn (10,2)*0.2 + [-1.5,0.5]))
-classB = numpy.random.randn (20,2)*0.2 + [ 0.0 , -0.5]
+#classA = numpy.concatenate ((numpy.random.randn(5,2)*0.2 + [1.5,-1], numpy.random.randn (5,2)*0.2 + [-1.5,0.5]))
+classA = numpy.random.randn (5,2)*0.5 + [1.5, 1.5]
+classB = numpy.random.randn (20,2)*0.5 + [1.5, 0.5]
 
-inputs = numpy.concatenate((classA ,classB))
+inputs = numpy.concatenate((classA , classB))
 targets = numpy.concatenate ((numpy.ones(classA.shape[0]), -numpy.ones(classB.shape[0])))
 
 N = inputs.shape[0] # Number of rows ( samples )
@@ -24,15 +25,14 @@ targets = targets[permute]
 
 # Task 01, Defining Kernel Function
 def kernelFun(x1, x2):
-# kernelOutput = numpy.dot(x1, x2)
+#    kernelOutput = numpy.dot(x1, x2)
 
-   kernelOutput = pow((numpy.dot(x1,x2) + 1), 2)
+#   kernelOutput = pow((numpy.dot(x1,x2) + 1), 2)
 
-#    dist = numpy.linalg.norm(x1-x2)
-#    expPower = (pow(dist,2)) / (2*pow(0.5,2))
-#    kernelOutput = math.exp(-expPower)
-
-   return kernelOutput
+    dist = numpy.linalg.norm(x1-x2)
+    expPower = (pow(dist,2)) / (2*pow(5,2))
+    kernelOutput = math.exp(-expPower)
+    return kernelOutput
 
 # Task 02, Defining Objective Function
 def buildTable(inputs, targets):
@@ -95,7 +95,7 @@ grid = numpy.array([[indicator(x,y,alpha,index,bias) for x in xgrid] for y in yg
 
 plt.contour (xgrid,ygrid,grid, (-1.0,0.0,1.0), colors =('red','black','blue'), linewidths =(1,3,1))
 plt.axis('equal')
-plt.suptitle('Polinomial kernel, power 2, shifted mean for class A')
+plt.suptitle('Linear Kernel, Noisy Data, C = None')
 plt.show()
 #plt.savefig('svmplot.pdf') # Save a copy in a f i l e
 
