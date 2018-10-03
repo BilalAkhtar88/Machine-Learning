@@ -24,7 +24,7 @@ def kernelFun(x1, x2):
 #    kernelOutput = pow((numpy.dot(x1,x2) + 1), 4)
 
 #    dist = numpy.linalg.norm(x1-x2)
-#    expPower = (pow(dist,2)) / (2*pow(sigma,2))
+#    expPower = (pow(dist,2)) / (2*pow(0.5,2))
 #    kernelOutput = math.exp(-expPower)
 
     return kernelOutput
