@@ -79,14 +79,14 @@ def mlParams(X, labels, W=None):
         idx = np.where(labels == Nclasses)[0]
 
         for dims in range(Ndims):
-            print(jdx,"   ",dims)
+            #print(jdx,"   ",dims)
             vect = X[idx,dims]  # Get the x for the class labels. Vectors are rows
             mu[jdx, dims] = np.mean(vect)
-            print(mu[jdx,:])
+            #print(mu[jdx,:])
             sigma[jdx,dims,dims]= 1/np.size(vect)*(np.sum(np.power(vect, 2) - np.power(mu[jdx, dims], 2)))
 
 
-    print(sigma)
+    #print(sigma)
     return mu, sigma
 
 # in:      X - N x d matrix of M data points
@@ -103,8 +103,13 @@ def classifyBayes(X, prior, mu, sigma):
     # TODO: fill in the code to compute the log posterior logProb!
     # ==========================
     for kClass in range (0,Nclasses):
+
         for iPoint in range (0, Npts):
-            logProb[kClass,iPoint] = - 0.5 * math.log(np.linalg.det(sigma[kClass])) - 0.5 * (X[iPoint] - mu[kClass]) * np.linalg.inv(sigma[kClass]) * np.transpose(X[iPoint] - mu[kClass]) + math.log(prior[kClass])
+            #print((X[iPoint] - mu[kClass]) * np.linalg.inv(sigma[kClass]))
+            #print((- 0.5) * ((X[iPoint] - mu[kClass]) * np.linalg.inv(sigma[kClass]) * np.transpose(X[iPoint] - mu[kClass])))
+            xMu = (X[iPoint] - mu[kClass]).reshape(1,-1)
+            #print(xMu * np.linalg.inv(sigma[kClass]))
+            logProb[kClass,iPoint] = - 0.5 * math.log(np.linalg.det(sigma[kClass])) - 0.5 * np.matmul(np.matmul(xMu , np.linalg.inv(sigma[kClass])) , np.transpose(xMu)) + math.log(prior[kClass])
     # ==========================
     
     # one possible way of finding max a-posteriori once
@@ -137,15 +142,15 @@ class BayesClassifier(object):
 # Call `genBlobs` and `plotGaussian` to verify your estimates.
 
 
-X, labels = genBlobs(centers=5)
-mu, sigma = mlParams(X,labels)
-plotGaussian(X,labels,mu,sigma)
+# X, labels = genBlobs(centers=5)
+# mu, sigma = mlParams(X,labels)
+# plotGaussian(X,labels,mu,sigma)
 
 
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-# testClassifier(BayesClassifier(), dataset='iris', split=0.7)
+testClassifier(BayesClassifier(), dataset='iris', split=0.7)
 
 
 
@@ -153,7 +158,7 @@ plotGaussian(X,labels,mu,sigma)
 
 
 
-#plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
+plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
 
 
 # ## Boosting functions to implement
