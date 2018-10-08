@@ -25,3 +25,5 @@ def computePrior(labels, W=None):
 
 labels = np.array([1,0,2,0,1,2,0])
 computePrior(labels)
+labels2 = np.array([1, 2, 3])
+print(np.shape(labels2))

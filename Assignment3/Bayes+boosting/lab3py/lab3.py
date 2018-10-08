@@ -21,7 +21,7 @@ from scipy import misc
 from imp import reload
 from labfuns import *
 import random
-
+import math
 
 # ## Bayes classifier functions to implement
 # 
@@ -86,15 +86,17 @@ def mlParams(X, labels, W=None):
 #         mu - C x d matrix of class means (mu[i] - class i mean)
 #      sigma - C x d x d matrix of class covariances (sigma[i] - class i sigma)
 # out:     h - N vector of class predictions for test points
-def classifyBayes(X, prior, mu, sigma):
 
+def classifyBayes(X, prior, mu, sigma):
     Npts = X.shape[0]
     Nclasses,Ndims = np.shape(mu)
     logProb = np.zeros((Nclasses, Npts))
 
     # TODO: fill in the code to compute the log posterior logProb!
     # ==========================
-    
+    for kClass in range (0,Nclasses):
+        for iPoint in range (0, Npts):
+            logProb[kClass,iPoint] = - 0.5 * math.log(np.linalg.det(sigma[kClass])) - 0.5 * (X[iPoint] - mu[kClass]) * np.linalg.inv(sigma[kClass]) * np.transpose(X[iPoint] - mu[kClass]) + math.log(prior[kClass])
     # ==========================
     
     # one possible way of finding max a-posteriori once
