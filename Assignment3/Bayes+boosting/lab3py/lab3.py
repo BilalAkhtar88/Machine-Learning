@@ -66,11 +66,16 @@ def mlParams(X, labels, W=None):
     mu = np.zeros((Nclasses,Ndims))
     sigma = np.zeros((Nclasses,Ndims,Ndims))
 
-    # TODO: fill in the code to compute mu and sigma!
-    # ==========================
-    
-    # ==========================
+    for jdx,Nclasses in enumerate(classes):
 
+        idx = np.where(labels == Nclasses)[0]
+
+        for dims in range(Ndims):
+            vect = X[idx,dims]  # Get the x for the class labels. Vectors are rows
+            mu[jdx, :] = np.mean(vect)
+            sigma[jdx,dims,dims]= 1/np.size(vect)*(np.sum(np.power(vect, 2) - np.power(mu[jdx, dims], 2)))
+        
+    print(sigma)
     return mu, sigma
 
 # in:      X - N x d matrix of M data points
@@ -127,7 +132,7 @@ plotGaussian(X,labels,mu,sigma)
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-#testClassifier(BayesClassifier(), dataset='iris', split=0.7)
+# testClassifier(BayesClassifier(), dataset='iris', split=0.7)
 
 
 
