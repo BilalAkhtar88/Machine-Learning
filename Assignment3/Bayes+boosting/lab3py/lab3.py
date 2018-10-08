@@ -42,12 +42,20 @@ def computePrior(labels, W=None):
 
     prior = np.zeros((Nclasses,1))
 
+    kNum = 0
+
     # TODO: compute the values of prior for each class!
     # ==========================
-    
+    for idx,className in enumerate(classes):
+        idx = np.where(labels == className)[0]
+        prior[kNum] = idx.shape[0] / Npts
+        kNum += 1
     # ==========================
 
     return prior
+
+# labels = np.array([1,0,2,0,1,2,0])
+# computePrior(labels)
 
 # NOTE: you do not need to handle the W argument for this part!
 # in:      X - N x d matrix of N data points
