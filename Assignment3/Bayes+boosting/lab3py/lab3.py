@@ -71,10 +71,13 @@ def mlParams(X, labels, W=None):
         idx = np.where(labels == Nclasses)[0]
 
         for dims in range(Ndims):
+            print(jdx,"   ",dims)
             vect = X[idx,dims]  # Get the x for the class labels. Vectors are rows
-            mu[jdx, :] = np.mean(vect)
+            mu[jdx, dims] = np.mean(vect)
+            print(mu[jdx,:])
             sigma[jdx,dims,dims]= 1/np.size(vect)*(np.sum(np.power(vect, 2) - np.power(mu[jdx, dims], 2)))
-        
+
+
     print(sigma)
     return mu, sigma
 
