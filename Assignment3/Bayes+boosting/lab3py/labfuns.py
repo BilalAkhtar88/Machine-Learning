@@ -205,9 +205,9 @@ def testClassifier(classifier, dataset='iris', dim=0, split=0.7, ntrials=100):
         means[trial] = 100*np.mean((yPr==yTe).astype(float))
 
     print("Final mean classification accuracy ", "%.3g" % (np.mean(means)), "with standard deviation", "%.3g" % (np.std(means)))
-    titlestr = "Classification accuracy:", str(np.mean(means))[:2],"% STD:",str(np.std(means))[:2]
+    titlestr = "Dataset: ",dataset, "Split:", str(split),"Classification accuracy:", str(np.mean(means))[:4]," STD:",str(np.std(means))[:3]
 
-    plotBoundary(classifier, titlestr, dataset='iris', split=0.7)
+    plotBoundary(classifier, titlestr, dataset, split)
 
 
 # ## Plotting the decision boundary
@@ -261,10 +261,8 @@ def plotBoundary(classifier, titlestr, dataset='iris', split=0.7):
     plt.legend(bbox_to_anchor=(1., 1), loc=2, borderaxespad=0.)
     fig.subplots_adjust(right=0.7)
 
-    if dataset == "iris":
-        plt.title(titlestr)
-    elif dataset == "vowels":
-        plt.title(titlestr)
+    plt.title(titlestr)
+
 
 
     plt.show()
