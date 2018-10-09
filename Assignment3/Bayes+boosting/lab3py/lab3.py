@@ -82,17 +82,11 @@ def mlParams(X, labels, W=None):
             #print(jdx,"   ",dims)
             vect = X[idx,dims]  # Get the x for the class labels. Vectors are rows
             weights = W[idx]
-            mu[jdx, dims] = np.mean(vect)
-
-            print(np.mean(vect))
-            print(np.dot(vect,weights)/np.sum(weights))
+            mu[jdx, dims] = np.dot(vect,weights)/np.sum(weights)
+            sigma[jdx,dims,dims]= 1/np.sum(weights)*np.dot(np.power(vect, 2) - np.power(mu[jdx, dims],2), weights)
 
 
-            #print(mu[jdx,:])
-            sigma[jdx,dims,dims]= 1/np.size(vect)*(np.sum(np.power(vect, 2) - np.power(mu[jdx, dims], 2)))
-
-
-    #print(sigma)
+    print(sigma)
     return mu, sigma
 
 # in:      X - N x d matrix of M data points
