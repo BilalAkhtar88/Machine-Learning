@@ -48,14 +48,12 @@ def computePrior(labels, W=None):
     # ==========================
     for idx,className in enumerate(classes):
         idx = np.where(labels == className)[0]
-        prior[kNum] = idx.shape[0] / Npts
+        #prior[kNum] = idx.shape[0] / Npts
+        prior[kNum] = np.sum(W[idx])
         kNum += 1
     # ==========================
 
     return prior
-
-# labels = np.array([1,0,2,0,1,2,0])
-# computePrior(labels)
 
 # NOTE: you do not need to handle the W argument for this part!
 # in:      X - N x d matrix of N data points
@@ -81,10 +79,12 @@ def mlParams(X, labels, W=None):
         for dims in range(Ndims):
             #print(jdx,"   ",dims)
             vect = X[idx,dims]  # Get the x for the class labels. Vectors are rows
+            weights = W[idx]
+            mu[jdx, dims] = np.dot(vect,weights)/np.sum(weights)
+            sigma[jdx,dims,dims]= 1/np.sum(weights)*np.dot(np.power(vect, 2) - np.power(mu[jdx, dims],2), weights)
 
 
     #print(sigma)
-    print(sigma)
     return mu, sigma
 
 # in:      X - N x d matrix of M data points
@@ -103,10 +103,7 @@ def classifyBayes(X, prior, mu, sigma):
     for kClass in range (0,Nclasses):
 
         for iPoint in range (0, Npts):
-            #print((X[iPoint] - mu[kClass]) * np.linalg.inv(sigma[kClass]))
-            #print((- 0.5) * ((X[iPoint] - mu[kClass]) * np.linalg.inv(sigma[kClass]) * np.transpose(X[iPoint] - mu[kClass])))
             xMu = (X[iPoint] - mu[kClass]).reshape(1,-1)
-            #print(xMu * np.linalg.inv(sigma[kClass]))
             logProb[kClass,iPoint] = - 0.5 * math.log(np.linalg.det(sigma[kClass])) - 0.5 * np.matmul(np.matmul(xMu , np.linalg.inv(sigma[kClass])) , np.transpose(xMu)) + math.log(prior[kClass])
     # ==========================
     
@@ -148,19 +145,16 @@ class BayesClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-testClassifier(BayesClassifier(), dataset='iris', split=0.9)
-
-
+testClassifier(BayesClassifier(), dataset='iris', split=0.7)
 
 #testClassifier(BayesClassifier(), dataset='vowel', split=0.9)
 
 
 
-<<<<<<< HEAD
-plotBoundary(BayesClassifier(), dataset='iris',split=0.9)
-=======
+#
+plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
+
 # plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
->>>>>>> 99134b6bcc3f32d95d7a523dc185bbb492056777
 
 
 # ## Boosting functions to implement

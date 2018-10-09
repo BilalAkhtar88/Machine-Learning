@@ -15,15 +15,20 @@ def computePrior(labels, W=None):
 
     # TODO: compute the values of prior for each class!
     # ==========================
-    # Iterate over both index and value
     for idx,className in enumerate(classes):
         idx = np.where(labels == className)[0]
-        prior[kNum] = idx.shape[0] / Npts
+        #print(className)
+        #print(W[idx])
+        prior[kNum] = np.sum(W[idx])
+        #prior[kNum] = idx.shape[0] / Npts
         kNum += 1
+    # ==========================
 
+    print(prior)
     return prior
 
-labels = np.array([1,0,2,0,1,2,0])
-computePrior(labels)
-labels2 = np.array([1, 2, 3])
-print(np.shape(labels2))
+labels = np.array([1,0,2,0,1,0])
+W = np.array([0.1,0.1,0.2,0.3,0.1,0.2])
+computePrior(labels, W)
+#labels2 = np.array([1, 2, 3])
+#print((labels2).reshape(1,-1).shape)
