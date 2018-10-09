@@ -205,13 +205,16 @@ def testClassifier(classifier, dataset='iris', dim=0, split=0.7, ntrials=100):
         means[trial] = 100*np.mean((yPr==yTe).astype(float))
 
     print("Final mean classification accuracy ", "%.3g" % (np.mean(means)), "with standard deviation", "%.3g" % (np.std(means)))
+    titlestr = "Dataset: ",dataset, "Split:", str(split),"Classification accuracy:", str(np.mean(means))[:4]," STD:",str(np.std(means))[:3]
+
+    plotBoundary(classifier, titlestr, dataset, split)
 
 
 # ## Plotting the decision boundary
 #
 # This is some code that you can use for plotting the decision boundary
 # boundary in the last part of the lab.
-def plotBoundary(classifier, dataset='iris', split=0.7):
+def plotBoundary(classifier, titlestr, dataset='iris', split=0.7):
 
     X,y,pcadim = fetchDataset(dataset)
     xTr,yTr,xTe,yTe,trIdx,teIdx = trteSplitEven(X,y,split,1)
@@ -257,6 +260,11 @@ def plotBoundary(classifier, dataset='iris', split=0.7):
         plt.scatter(xTe[teClIdx,0],xTe[teClIdx,1],marker='*',c=color,s=50,alpha=0.8, label="Class "+str(c)+" Test")
     plt.legend(bbox_to_anchor=(1., 1), loc=2, borderaxespad=0.)
     fig.subplots_adjust(right=0.7)
+
+    plt.title(titlestr)
+
+
+
     plt.show()
 
 

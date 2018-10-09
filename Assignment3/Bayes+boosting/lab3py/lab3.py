@@ -81,12 +81,10 @@ def mlParams(X, labels, W=None):
         for dims in range(Ndims):
             #print(jdx,"   ",dims)
             vect = X[idx,dims]  # Get the x for the class labels. Vectors are rows
-            mu[jdx, dims] = np.mean(vect)
-            #print(mu[jdx,:])
-            sigma[jdx,dims,dims]= 1/np.size(vect)*(np.sum(np.power(vect, 2) - np.power(mu[jdx, dims], 2)))
 
 
     #print(sigma)
+    print(sigma)
     return mu, sigma
 
 # in:      X - N x d matrix of M data points
@@ -158,7 +156,11 @@ testClassifier(BayesClassifier(), dataset='iris', split=0.9)
 
 
 
+<<<<<<< HEAD
 plotBoundary(BayesClassifier(), dataset='iris',split=0.9)
+=======
+# plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
+>>>>>>> 99134b6bcc3f32d95d7a523dc185bbb492056777
 
 
 # ## Boosting functions to implement
