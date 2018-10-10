@@ -191,6 +191,7 @@ def trainBoost(base_classifier, X, labels, T=10):
         # TODO: Fill in the rest, construct the alphas etc.
         # ==========================
         
+
         # alphas.append(alpha) # you will need to append the new alpha
         # ==========================
         
