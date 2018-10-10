@@ -29,8 +29,10 @@ def computePrior(labels, W=None):
 
 labels = np.array([1,0,2,0,1,0])
 votes = np.array([1,1,2,0,1,2])
+h = votes / 2
 k = np.array([1,1,1,1,1,1])
-print((labels==votes)*k)
+ren = np.where(labels == votes)
+print(ren[0])
 W = np.array([0.1,0.1,0.2,0.3,0.1,0.2])
 #computePrior(labels, W)
 #labels2 = np.array([1, 2, 3])
