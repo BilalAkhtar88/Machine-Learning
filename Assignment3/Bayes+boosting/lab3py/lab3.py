@@ -195,8 +195,8 @@ def trainBoost(base_classifier, X, labels, T=10):
 
         wNew = np.zeros((Npts,1))
 
-        wNew[np.where(labels == vote)] = wCur[np.where(labels == vote)] * np.exp(-alpha)
-        wNew[np.where(labels != vote)] = wCur[np.where(labels != vote)] * np.exp(alpha)
+        wNew[np.where(labels == vote)[0]] = wCur[np.where(labels == vote)[0]] * np.exp(-alpha)
+        wNew[np.where(labels != vote)[0]] = wCur[np.where(labels != vote)[0]] * np.exp(alpha)
 
 
         Z = np.sum(wNew)
