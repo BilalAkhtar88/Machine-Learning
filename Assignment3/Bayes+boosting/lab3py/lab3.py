@@ -177,6 +177,7 @@ def trainBoost(base_classifier, X, labels, T=10):
 
     # The weights for the first iteration
     wCur = np.ones((Npts,1))/float(Npts)
+    wNew = np.zeros((Npts, 1))
 
     for i_iter in range(0, T):
         # a new classifier can be trained like this, given the current weights
@@ -185,22 +186,13 @@ def trainBoost(base_classifier, X, labels, T=10):
         # do classification for each point
         vote = classifiers[-1].classify(X)
 
-        diffBtwVoLab = (vote == labels)
-
         errorInd = np.where(vote != labels)[0]
-
         error = np.sum(wCur[errorInd])
-
-        alpha = 0.5*(np.log(1-error)-np.log(error))
-
-        wNew = np.zeros((Npts,1))
+        alpha = 0.5*(np.log(1-error) - np.log(error))
 
         wNew[np.where(labels == vote)[0]] = wCur[np.where(labels == vote)[0]] * np.exp(-alpha)
         wNew[np.where(labels != vote)[0]] = wCur[np.where(labels != vote)[0]] * np.exp(alpha)
-
-
         Z = np.sum(wNew)
-
         wNew = wNew/Z
 
         wCur = wNew
@@ -208,15 +200,10 @@ def trainBoost(base_classifier, X, labels, T=10):
 
         # TODO: Fill in the rest, construct the alphas etc.
         # ==========================
-<<<<<<< HEAD
 
-        # alphas.append(alpha) # you will need to append the new alpha
-=======
-        
         alphas.append(alpha) # you will need to append the new alpha
->>>>>>> 953ad930e30731258df8821ee4b078c3b6134d8e
         # ==========================
-        
+
     return classifiers, alphas
 
 # in:       X - N x d matrix of N data points
@@ -227,6 +214,7 @@ def trainBoost(base_classifier, X, labels, T=10):
 def classifyBoost(X, classifiers, alphas, Nclasses):
     Npts = X.shape[0]
     Ncomps = len(classifiers)
+    #print(Ncomps)
 
     # if we only have one classifier, we may just classify directly
     if Ncomps == 1:
@@ -237,7 +225,17 @@ def classifyBoost(X, classifiers, alphas, Nclasses):
         # TODO: implement classificiation when we have trained several classifiers!
         # here we can do it by filling in the votes vector with weighted votes
         # ==========================
-        
+        #print(votes)
+        for classifierNum in range(0,Ncomps):
+            classCur = classifiers[classifierNum].classify(X)
+            classes = np.unique(classCur)
+
+            classNum = 0
+
+            for idx, className in enumerate(classes):
+                idx = np.where(classCur == className)[0]
+                votes[idx,classNum] += alphas[classifierNum]
+                classNum += 1
         # ==========================
 
         # one way to compute yPred after accumulating the votes
