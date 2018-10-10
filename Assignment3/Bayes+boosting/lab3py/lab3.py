@@ -186,12 +186,30 @@ def trainBoost(base_classifier, X, labels, T=10):
         vote = classifiers[-1].classify(X)
 
         diffBtwVoLab = (vote == labels)
-        error = np.sum(wCur * (1 - diffBtwVoLab))
+
+        errorInd = np.where(vote != labels)[0]
+
+        error = np.sum(wCur[errorInd])
+
+        alpha = 0.5*(np.log(1-error)-np.log(error))
+
+        wNew = np.zeros((Npts,1))
+
+        wNew[np.where(labels == vote)] = wCur[np.where(labels == vote)] * np.exp(-alpha)
+        wNew[np.where(labels != vote)] = wCur[np.where(labels != vote)] * np.exp(alpha)
+
+
+        Z = np.sum(wNew)
+
+        wNew = wNew/Z
+
+        wCur = wNew
+
 
         # TODO: Fill in the rest, construct the alphas etc.
         # ==========================
         
-        # alphas.append(alpha) # you will need to append the new alpha
+        alphas.append(alpha) # you will need to append the new alpha
         # ==========================
         
     return classifiers, alphas
