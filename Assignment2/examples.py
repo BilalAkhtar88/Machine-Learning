@@ -24,11 +24,14 @@ def computePrior(labels, W=None):
         kNum += 1
     # ==========================
 
-    print(prior)
+    #print(prior)
     return prior
 
 labels = np.array([1,0,2,0,1,0])
+votes = np.array([1,1,2,0,1,2])
+k = np.array([1,1,1,1,1,1])
+print((labels==votes)*k)
 W = np.array([0.1,0.1,0.2,0.3,0.1,0.2])
-computePrior(labels, W)
+#computePrior(labels, W)
 #labels2 = np.array([1, 2, 3])
 #print((labels2).reshape(1,-1).shape)

@@ -214,7 +214,7 @@ def testClassifier(classifier, dataset='iris', dim=0, split=0.7, ntrials=100):
 #
 # This is some code that you can use for plotting the decision boundary
 # boundary in the last part of the lab.
-def plotBoundary(classifier, titlestr, dataset='iris', split=0.7):
+def plotBoundary(classifier, titlestr = None, dataset='iris', split=0.7):
 
     X,y,pcadim = fetchDataset(dataset)
     xTr,yTr,xTe,yTe,trIdx,teIdx = trteSplitEven(X,y,split,1)

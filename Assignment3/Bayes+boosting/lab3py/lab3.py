@@ -145,14 +145,14 @@ class BayesClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-testClassifier(BayesClassifier(), dataset='iris', split=0.7)
+#testClassifier(BayesClassifier(), dataset='iris', split=0.7)
 
 #testClassifier(BayesClassifier(), dataset='vowel', split=0.9)
 
 
 
 #
-plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
+# plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
 
 # plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
 
@@ -184,6 +184,9 @@ def trainBoost(base_classifier, X, labels, T=10):
 
         # do classification for each point
         vote = classifiers[-1].classify(X)
+
+        diffBtwVoLab = (vote == labels)
+        error = np.sum(wCur * (1 - diffBtwVoLab))
 
         # TODO: Fill in the rest, construct the alphas etc.
         # ==========================
@@ -244,7 +247,7 @@ class BoostClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-#testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
+testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
 
 
 
