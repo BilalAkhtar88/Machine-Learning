@@ -186,15 +186,14 @@ def trainBoost(base_classifier, X, labels, T=10):
         vote = classifiers[-1].classify(X)
 
         errorInd = np.where(vote != labels)[0]
-        if np.sum(wCur[errorInd]) > 0:
-            error = np.sum(wCur[errorInd])
-        else:
-            error = pow(10, -5)
+        error = np.sum(wCur[errorInd]) if np.sum(wCur[errorInd]) > 0 else pow(10, -5)
         alpha = 0.5*(np.log(1-error) - np.log(error))
 
         wNew[np.where(labels == vote)[0]] = wCur[np.where(labels == vote)[0]] * np.exp(-alpha)
         wNew[np.where(labels != vote)[0]] = wCur[np.where(labels != vote)[0]] * np.exp(alpha)
+
         Z = np.sum(wNew)
+
         wNew = wNew/Z
 
         wCur = wNew
@@ -224,9 +223,10 @@ def classifyBoost(X, classifiers, alphas, Nclasses):
         # TODO: implement classificiation when we have trained several classifiers!
         # here we can do it by filling in the votes vector with weighted votes
         # ==========================
-        for pointNum in range (0,Npts):
-            for classifierNum in range(0,Ncomps):
-                votes[pointNum,(classifiers[classifierNum].classify(X[pointNum]))]  += alphas[classifierNum]
+        for classifierNum in range(0,Ncomps):
+            intX = classifiers[classifierNum].classify(X)
+            for pointNum in range(0, Npts):
+                votes[pointNum,intX[pointNum]]  += alphas[classifierNum]
 
         # for classifierNum in range(0,Ncomps):
         #     classCur = classifiers[classifierNum].classify(X)
