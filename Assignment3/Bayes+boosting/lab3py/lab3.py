@@ -197,10 +197,8 @@ def trainBoost(base_classifier, X, labels, T=10):
 
         wCur = wNew
 
-
         # TODO: Fill in the rest, construct the alphas etc.
         # ==========================
-
         alphas.append(alpha) # you will need to append the new alpha
         # ==========================
 
@@ -225,21 +223,24 @@ def classifyBoost(X, classifiers, alphas, Nclasses):
         # TODO: implement classificiation when we have trained several classifiers!
         # here we can do it by filling in the votes vector with weighted votes
         # ==========================
-        #print(votes)
-        for classifierNum in range(0,Ncomps):
-            classCur = classifiers[classifierNum].classify(X)
-            classes = np.unique(classCur)
+        for pointNumb in range (0,Npts):
+            for classifierNum in range(0,Ncomps):
+                votes[pointNumb,(classifiers[classifierNum].classify(X[pointNumb]))]  += alphas[classifierNum]
 
-            classNum = 0
-
-            for idx, className in enumerate(classes):
-                idx = np.where(classCur == className)[0]
-                votes[idx,classNum] += alphas[classifierNum]
-                classNum += 1
-        # ==========================
-
+        # for classifierNum in range(0,Ncomps):
+        #     classCur = classifiers[classifierNum].classify(X)
+        #     classes = np.unique(classCur)
+        #
+        #     classNum = 0
+        #
+        #     for idx, className in enumerate(classes):
+        #         idx = np.where(classCur == className)[0]
+        #         votes[idx,classNum] += alphas[classifierNum]
+        #         classNum += 1
+        # # ==========================
+        classifiedRet = np.argmax(votes,axis=1)
         # one way to compute yPred after accumulating the votes
-        return np.argmax(votes,axis=1)
+        return classifiedRet
 
 
 # The implemented functions can now be summarized another classifer, the `BoostClassifier` class. This class enables boosting different types of classifiers by initializing it with the `base_classifier` argument. No need to add anything here.
@@ -268,11 +269,12 @@ class BoostClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
+testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.5)
+#plotBoundary(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.5)
 
 
 
-#testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='vowel',split=0.7)
+# testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='vowel',split=0.7)
 
 
 
