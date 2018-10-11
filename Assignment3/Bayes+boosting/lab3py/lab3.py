@@ -101,7 +101,6 @@ def classifyBayes(X, prior, mu, sigma):
     # TODO: fill in the code to compute the log posterior logProb!
     # ==========================
     for kClass in range (0,Nclasses):
-
         for iPoint in range (0, Npts):
             xMu = (X[iPoint] - mu[kClass]).reshape(1,-1)
             logProb[kClass,iPoint] = - 0.5 * math.log(np.linalg.det(sigma[kClass])) - 0.5 * np.matmul(np.matmul(xMu , np.linalg.inv(sigma[kClass])) , np.transpose(xMu)) + math.log(prior[kClass])
@@ -187,7 +186,10 @@ def trainBoost(base_classifier, X, labels, T=10):
         vote = classifiers[-1].classify(X)
 
         errorInd = np.where(vote != labels)[0]
-        error = np.sum(wCur[errorInd])
+        if np.sum(wCur[errorInd]) > 0:
+            error = np.sum(wCur[errorInd])
+        else:
+            error = pow(10, -5)
         alpha = 0.5*(np.log(1-error) - np.log(error))
 
         wNew[np.where(labels == vote)[0]] = wCur[np.where(labels == vote)[0]] * np.exp(-alpha)
@@ -200,7 +202,6 @@ def trainBoost(base_classifier, X, labels, T=10):
         # TODO: Fill in the rest, construct the alphas etc.
         # ==========================
         alphas.append(alpha) # you will need to append the new alpha
-        # ==========================
 
     return classifiers, alphas
 
@@ -223,9 +224,9 @@ def classifyBoost(X, classifiers, alphas, Nclasses):
         # TODO: implement classificiation when we have trained several classifiers!
         # here we can do it by filling in the votes vector with weighted votes
         # ==========================
-        for pointNumb in range (0,Npts):
+        for pointNum in range (0,Npts):
             for classifierNum in range(0,Ncomps):
-                votes[pointNumb,(classifiers[classifierNum].classify(X[pointNumb]))]  += alphas[classifierNum]
+                votes[pointNum,(classifiers[classifierNum].classify(X[pointNum]))]  += alphas[classifierNum]
 
         # for classifierNum in range(0,Ncomps):
         #     classCur = classifiers[classifierNum].classify(X)
@@ -269,7 +270,7 @@ class BoostClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.5)
+testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
 #plotBoundary(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.5)
 
 
