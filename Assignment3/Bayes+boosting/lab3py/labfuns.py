@@ -281,7 +281,7 @@ def plotBoundary(classifier, titlestr = None, dataset='iris', split=0.7):
 
     plt.savefig(filename)
 
-    plt.show()
+    # plt.show()
 
 
 def visualizeOlivettiVectors(xTr, Xte):
