@@ -205,16 +205,30 @@ def testClassifier(classifier, dataset='iris', dim=0, split=0.7, ntrials=100):
         means[trial] = 100*np.mean((yPr==yTe).astype(float))
 
     print("Final mean classification accuracy ", "%.3g" % (np.mean(means)), "with standard deviation", "%.3g" % (np.std(means)))
-    titlestr = "Dataset: ",dataset, "Split:", str(split),"Classification accuracy:", str(np.mean(means))[:4]," STD:",str(np.std(means))[:3]
+    # titlestr = Dataset: ,dataset, "Split:", str(split),"Classification accuracy:", str(np.mean(means))[:4]," STD:",str(np.std(means))[:3]
+
+    class_name = classifier.__class__.__name__
+
+    titlestr = "Classifier: %s  Dataset: %s  \n Split: %1.1f  Accuracy: %2.1f " %(class_name,dataset,split,np.mean(means))+"%"
+    filenamestring = "%s%s%1.1f.png" %(class_name,dataset,split)
 
     plotBoundary(classifier, titlestr, dataset, split)
+
+
 
 
 # ## Plotting the decision boundary
 #
 # This is some code that you can use for plotting the decision boundary
 # boundary in the last part of the lab.
+globalcntr = 0
+
+
 def plotBoundary(classifier, titlestr = None, dataset='iris', split=0.7):
+
+    global globalcntr
+    globalcntr+=1
+
 
     X,y,pcadim = fetchDataset(dataset)
     xTr,yTr,xTe,yTe,trIdx,teIdx = trteSplitEven(X,y,split,1)
@@ -263,9 +277,11 @@ def plotBoundary(classifier, titlestr = None, dataset='iris', split=0.7):
 
     plt.title(titlestr)
 
+    filename = "%d.png" %(globalcntr)
 
+    plt.savefig(filename)
 
-    plt.show()
+    # plt.show()
 
 
 def visualizeOlivettiVectors(xTr, Xte):
