@@ -205,7 +205,12 @@ def testClassifier(classifier, dataset='iris', dim=0, split=0.7, ntrials=100):
         means[trial] = 100*np.mean((yPr==yTe).astype(float))
 
     print("Final mean classification accuracy ", "%.3g" % (np.mean(means)), "with standard deviation", "%.3g" % (np.std(means)))
-    titlestr = "Dataset: ",dataset, "Split:", str(split),"Classification accuracy:", str(np.mean(means))[:4]," STD:",str(np.std(means))[:3]
+    # titlestr = Dataset: ,dataset, "Split:", str(split),"Classification accuracy:", str(np.mean(means))[:4]," STD:",str(np.std(means))[:3]
+
+    class_name = classifier.__class__.__name__
+
+    titlestr = "Classifier: %s  Dataset: %s  \n Split: %1.1f  Accuracy: %2.1f " %(class_name,dataset,split,np.mean(means))+"%"
+
 
     plotBoundary(classifier, titlestr, dataset, split)
 
@@ -262,8 +267,6 @@ def plotBoundary(classifier, titlestr = None, dataset='iris', split=0.7):
     fig.subplots_adjust(right=0.7)
 
     plt.title(titlestr)
-
-
 
     plt.show()
 

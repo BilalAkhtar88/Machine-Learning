@@ -144,7 +144,7 @@ class BayesClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-#testClassifier(BayesClassifier(), dataset='iris', split=0.7)
+testClassifier(BayesClassifier(), dataset='iris', split=0.7)
 
 #testClassifier(BayesClassifier(), dataset='vowel', split=0.9)
 
@@ -270,7 +270,7 @@ class BoostClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
+# testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
 #plotBoundary(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.5)
 
 
