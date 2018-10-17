@@ -323,7 +323,7 @@ class BoostClassifier(object):
 
 
 
-#testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='olivetti',split=0.7, dim=20)
+# testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='olivetti',split=0.7, dim=20)
 
 
 # You should get an accuracy around 70%. If you wish, you can compare this with using pure decision trees or a boosted bayes classifier. Not too bad, now let's try and classify a face as belonging to one of 40 persons!
@@ -371,7 +371,7 @@ xTepca = pca.transform(xTe)  # apply on test data
 # use our pre-defined decision tree classifier together with the implemented
 # boosting to classify data points in the training data
 
-classifier = BoostClassifier(DecisionTreeClassifier(), T=10).trainClassifier(xTrpca, yTr)
+classifier = BayesClassifier().trainClassifier(xTrpca, yTr)
 
 yPr = classifier.classify(xTepca)
 
