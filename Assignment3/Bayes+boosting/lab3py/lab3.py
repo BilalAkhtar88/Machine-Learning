@@ -383,8 +383,8 @@ testClass = yTe[testInd]
 # visualize the test point together with the training points used to train
 # the class that the test point was classified to belong to
 
-idx = np.where(yTr == testClass)[0]
+idx = np.where(yPr == testClass)[0]
 
-testVect = xTr[idx]
+testVect = xTe[idx]
 
 visualizeOlivettiVectors(testVect, xTe[testInd, :])
